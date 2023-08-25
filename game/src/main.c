@@ -66,11 +66,19 @@ void setup() {
 }
 
 void update() {
+				/*WHACKSHIT!! CPU LASTIG
 				//TODO: sleep until reach the frame target time
 				while(!SDL_TICKS_PASSED(
 												SDL_GetTicks(),
 												last_frame_time +
 												FRAME_TARGET_TIME));
+				*/
+				//besser so
+				/* muss aber auch nicht sein, da frame cap an sich bissi lost is baller doch einfach?
+				int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - last_frame_time);
+				if(time to wait > 0 && time_to_wait <= FRAME_TARGET_TIME) {
+								SDL_Delay(time_to_wait);
+				}*/
 
 				//Get a delta time factor converted to seconds to be used to upgrade objects
 				float delta_time = 	(SDL_GetTicks() - last_frame_time) / 1000.0f;
