@@ -6,6 +6,9 @@ SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 int game_is_running = FALSE;
 
+//millisec of last frame
+int last_frame_time = 0;
+
 struct ball {
 				float x;
 				float y;
@@ -63,8 +66,33 @@ void setup() {
 }
 
 void update() {
-				ball.x += 1;
-				ball.y += 1;
+				//TODO: sleep until reach the frame target time
+				while(!SDL_TICKS_PASSED(
+												SDL_GetTicks(),
+												last_frame_time +
+												FRAME_TARGET_TIME));
+
+				//Get a delta time factor converted to seconds to be used to upgrade objects
+				float delta_time = 	(SDL_GetTicks() - last_frame_time) / 1000.0f;
+				
+				last_frame_time = SDL_GetTicks();
+
+				ball.x += 70 * delta_time;
+				ball.y += 50 * delta_time;
+
+				/*
+				SDL_Event event;
+				SDL_PollEvent(&event);
+
+				switch(event.type) {
+								case SDL_KEYDOWN:
+												if(event.key.keysym.sym == SDLK_a) {
+																ball.x++;
+												}
+												else if(event.key.keysym.sym == SDLK_d) {
+																ball.y++;
+												}
+				}*/
 }
 
 void render() {									//   			r, g, b, alpha	
